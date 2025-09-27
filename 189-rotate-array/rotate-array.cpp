@@ -5,18 +5,22 @@ public:
         k = k%n;       
         k = n-k;
         
-        vector<int> temp;
+        // vector<int> temp;
 
-        for(int i=0; i<k; i++){
-            temp.push_back(nums[i]);
-        }
-        for(int i=k; i<n; i++){
-            nums[i-k] = nums[i];
-        }
+        // for(int i=0; i<k; i++){
+        //     temp.push_back(nums[i]);
+        // }
+        // for(int i=k; i<n; i++){
+        //     nums[i-k] = nums[i];
+        // }
 
-        for(int i=n-k; i<n; i++){
-            nums[i] = temp[i-(n-k)];
-        }
+        // for(int i=n-k; i<n; i++){
+        //     nums[i] = temp[i-(n-k)];
+        // }/
+
+        reverse(nums.begin(), nums.begin()+k);
+        reverse(nums.begin()+k, nums.end());
+        reverse(nums.begin(), nums.end());
 
 
     }
