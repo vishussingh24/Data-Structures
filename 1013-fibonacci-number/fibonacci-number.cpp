@@ -9,7 +9,7 @@ public:
     // using Dynamic programming
 
 
-
+/*
     // using  top down approch 
     int fib(int n) {
         // creating an dp array of n+1 size
@@ -39,14 +39,32 @@ public:
 
     //using bottom up approch:-
 
-    int solve(vector<int>& dp, int n){
-        if(n<=1) return n;
+    // int solve(vector<int>& dp, int n){
+    //     if(n<=1) return n;
         
-        for(int i=2; i<=n; i++){
-            dp[i]=dp[i-1]+dp[i-2];
-        }
-        return dp[n];
+    //     for(int i=2; i<=n; i++){
+    //         dp[i]=dp[i-1]+dp[i-2];
+    //     }
+    //     return dp[n];
 
+    // }
+
+
+    //space optimization:-
+
+    int fib(int n){
+        if(n<=1) return n;
+
+        int curr=0;
+        int prev1=0;
+        int prev2=1;
+
+        for(int i=2; i<=n; i++){
+            curr=prev1+prev2;
+            prev1=prev2;
+            prev2=curr;
+        }
+        return curr;
     }
 
 
