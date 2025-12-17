@@ -31,18 +31,55 @@ public:
 
     //memoization :-
     
-    bool subsetSum(vector<int>& nums, int i, int sum, vector<vector<int>>& dp){
-        if(sum == 0) return true;
-        if(i == nums.size()) return false;
-        if(dp[i][sum] != -1) return dp[i][sum];
+    // bool subsetSum(vector<int>& nums, int i, int sum, vector<vector<int>>& dp){
+    //     if(sum == 0) return true;
+    //     if(i == nums.size()) return false;
+    //     if(dp[i][sum] != -1) return dp[i][sum];
         
-        bool pick = false;
-        if(nums[i] <= sum){
-            pick = subsetSum(nums, i+1, sum - nums[i], dp);
+    //     bool pick = false;
+    //     if(nums[i] <= sum){
+    //         pick = subsetSum(nums, i+1, sum - nums[i], dp);
+    //     }
+    //     bool skip = subsetSum(nums, i+1, sum, dp);
+    //     dp[i][sum] = pick || skip;
+    //     return dp[i][sum];
+    // }
+
+    // bool canPartition(vector<int>& nums) {
+    //     int n = nums.size();
+    //     int sum = 0;
+    //     for(int x: nums){
+    //         sum+=x;
+    //     }
+    //     if(sum%2 != 0) return false;
+
+    //     vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
+
+    //     return subsetSum(nums, 0, sum/2, dp);
+    // }
+
+
+    // Top - Down
+
+    
+    bool subsetSum(vector<int>& nums, int n, int sum, vector<vector<bool>>& dp){
+        for(int i= 0; i<=n; i++){
+            for(int j = 0; j<=sum; j++){
+                if(i == 0) dp[i][j] = false;
+                if(j == 0) dp[i][j] = true;
+            }
         }
-        bool skip = subsetSum(nums, i+1, sum, dp);
-        dp[i][sum] = pick || skip;
-        return dp[i][sum];
+
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=sum; j++){
+                if(nums[i-1]<=j){
+                    dp[i][j] = (dp[i-1][j - nums[i-1]] || dp[i-1][j]);
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][sum];
     }
 
 
@@ -54,8 +91,8 @@ public:
         }
         if(sum%2 != 0) return false;
 
-        vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
+        vector<vector<bool>> dp(n+1, vector<bool>(sum+1, -1));
 
-        return subsetSum(nums, 0, sum/2, dp);
+        return subsetSum(nums, n, sum/2, dp);
     }
 };
