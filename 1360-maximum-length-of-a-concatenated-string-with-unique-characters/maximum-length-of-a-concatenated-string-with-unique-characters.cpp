@@ -1,6 +1,8 @@
 class Solution {
 public:
 
+    unordered_map<string, int> mp;
+
     bool containDuplicate(string s, string temp){
         vector<int> freq(26, 0);
 
@@ -18,6 +20,7 @@ public:
         if(i == n) {
             return s.size();
         }
+        if(mp.find(s) != mp.end()) return mp[s];
         int take = 0;
         if(!containDuplicate(s, arr[i])){
             take = solve(arr, n, i+1, s+arr[i]);
@@ -29,6 +32,7 @@ public:
 
     int maxLength(vector<string>& arr) {
         int n = arr.size();
+        mp.clear();
         return solve(arr, n, 0, "");
     }
 };
